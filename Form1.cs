@@ -36,16 +36,22 @@ namespace KNN
         /// <summary>
         /// Материалы экзамена.
         /// </summary>
-        public List<List<int>> Exam = new List<List<int>>();
+        public int[,] Exam = new int[2, 30];
+        /// <summary>
+        /// К-соседей
+        /// </summary>
         uint NeighborsCount;
+
+        Random rnd = new Random();
         private void button1_Click(object sender, EventArgs e)
         {
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
-            //NeighborsCount = uint.Parse(textBox1.Text);
-            Random rnd = new Random();
+            
+            NeighborsCount = uint.Parse(textBox1.Text);
+            
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 50; j++)
@@ -70,7 +76,37 @@ namespace KNN
 
         private void button3_Click(object sender, EventArgs e)
         {
+            textBox6.Text = "";
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    Exam[i, j] = rnd.Next(20, 75);                    
+                }
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    textBox6.Text += $"{Exam[0, j]}       {Exam[1, j]}\n";                   
+                }
+            }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            double[] Metric = new double[200];
+            string[] Views = new string[200];
+            
+            for (int i = 0; i < 30; i++) //идём по всем МЭ
+            {
+               for (int j=0;j<50;j++) //идём по всем образам
+                {
+                    int k = 0;
+                    Metric[k] = Math.Sqrt((Exam[0, i] - View1[0, j]) ^ 2 + (Exam[1, i] - View1[1, j]) ^ 2);
+                }
+            }
         }
     }
 }

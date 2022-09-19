@@ -41,7 +41,6 @@ namespace KNN
         /// К-соседей
         /// </summary>
         uint NeighborsCount;
-        Dictionary<double, string> Metric = new Dictionary<double, string >();
 
         Random rnd = new Random();
         private void button1_Click(object sender, EventArgs e)
@@ -51,7 +50,7 @@ namespace KNN
             textBox4.Text = "";
             textBox5.Text = "";
             
-            
+            NeighborsCount = uint.Parse(textBox1.Text);
             
             for (int i = 0; i < 2; i++)
             {
@@ -77,7 +76,6 @@ namespace KNN
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NeighborsCount = uint.Parse(textBox1.Text);
             textBox6.Text = "";
             for (int i = 0; i < 2; i++)
             {
@@ -98,20 +96,15 @@ namespace KNN
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+            double[] Metric = new double[200];
+            string[] Views = new string[200];
+            
             for (int i = 0; i < 30; i++) //идём по всем МЭ
             {
-                int k = 0;
-                for (int j=0;j<50;j++) //идём по всем образам
+               for (int j=0;j<50;j++) //идём по всем образам
                 {
-                    Metric.Add(Math.Sqrt((Exam[0, i] - View1[0, j]) ^ 2 + (Exam[1, i] - View1[1, j]) ^ 2), "Образ 1");
-                    k++;
-                    Metric.Add(Math.Sqrt((Exam[0, i] - View2[0, j]) ^ 2 + (Exam[1, i] - View2[1, j]) ^ 2), "Образ 2" );
-                    k++;
-                    Metric.Add( Math.Sqrt((Exam[0, i] - View3[0, j]) ^ 2 + (Exam[1, i] - View3[1, j]) ^ 2), "Образ 3");
-                    k++;
-                    Metric.Add(Math.Sqrt((Exam[0, i] - View4[0, j]) ^ 2 + (Exam[1, i] - View4[1, j]) ^ 2), "Образ 4" );
-                    k++;
+                    int k = 0;
+                    Metric[k] = Math.Sqrt((Exam[0, i] - View1[0, j]) ^ 2 + (Exam[1, i] - View1[1, j]) ^ 2);
                 }
             }
         }

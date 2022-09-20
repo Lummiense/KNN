@@ -20,23 +20,23 @@ namespace KNN
         /// Образ 1.
         /// </summary>
         /// <param name="view1"></param>
-        public int[,] View1 = new int[2, 50];
+        public double[,] View1 = new double[2, 50];
         /// <summary>
         /// Образ 2.
         /// </summary>
-        public int[,] View2 = new int[2, 50];
+        public double[,] View2 = new double[2, 50];
         /// <summary>
         /// Образ 3.
         /// </summary>
-        public int[,] View3 = new int[2, 50];
+        public double[,] View3 = new double[2, 50];
         /// <summary>
         /// Образ 4.
         /// </summary>
-        public int[,] View4 = new int[2, 50];
+        public double[,] View4 = new double[2, 50];
         /// <summary>
         /// Материалы экзамена.
         /// </summary>
-        public int[,] Exam = new int[2, 30];
+        public double[,] Exam = new double[2, 30];
         /// <summary>
         /// К-соседей
         /// </summary>
@@ -50,7 +50,7 @@ namespace KNN
             textBox4.Text = "";
             textBox5.Text = "";
             
-            NeighborsCount = uint.Parse(textBox1.Text);
+            
             
             for (int i = 0; i < 2; i++)
             {
@@ -76,6 +76,7 @@ namespace KNN
 
         private void button3_Click(object sender, EventArgs e)
         {
+            NeighborsCount = uint.Parse(textBox1.Text);
             textBox6.Text = "";
             for (int i = 0; i < 2; i++)
             {
@@ -100,13 +101,30 @@ namespace KNN
             string[] Views = new string[200];
             
             for (int i = 0; i < 30; i++) //идём по всем МЭ
-            {
+            { 
+                int k = 0;
                for (int j=0;j<50;j++) //идём по всем образам
                 {
-                    int k = 0;
-                    Metric[k] = Math.Sqrt((Exam[0, i] - View1[0, j]) ^ 2 + (Exam[1, i] - View1[1, j]) ^ 2);
+                    
+                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View1[0, j],2) + Math.Pow(Exam[1, i] - View1[1, j], 2));
+                    Views[k] = "Образ 1";
+                    k++;
+                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View2[0, j],2) + Math.Pow(Exam[1, i] - View2[1, j], 2));
+                    Views[k] = "Образ 2";
+                    k++;
+                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View3[0, j],2) + Math.Pow(Exam[1, i] - View3[1, j], 2));
+                    Views[k] = "Образ 3";
+                    k++;
+                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View4[0, j],2) + Math.Pow(Exam[1, i] - View4[1, j], 2));
+                    Views[k] = "Образ 4";
+                    k++;
                 }
             }
+
+            /*for (k = 0; k < Metric.Length; k++)
+            {
+                
+            }*/
         }
     }
 }

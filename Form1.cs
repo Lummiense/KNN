@@ -97,29 +97,31 @@ namespace KNN
 
         private void button2_Click(object sender, EventArgs e)
         {
-            double[] Metric = new double[200];
-            string[] Views = new string[200];
+            double[] V1Metric = new double[50];
+            double[] V2Metric = new double[50];
+            double[] V3Metric = new double[50];
+            double[] V4Metric = new double[50];
             
             for (int i = 0; i < 30; i++) //идём по всем МЭ
             { 
-                int k = 0;
+                
                for (int j=0;j<50;j++) //идём по всем образам
-                {
-                    
-                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View1[0, j],2) + Math.Pow(Exam[1, i] - View1[1, j], 2));
-                    Views[k] = "Образ 1";
-                    k++;
-                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View2[0, j],2) + Math.Pow(Exam[1, i] - View2[1, j], 2));
-                    Views[k] = "Образ 2";
-                    k++;
-                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View3[0, j],2) + Math.Pow(Exam[1, i] - View3[1, j], 2));
-                    Views[k] = "Образ 3";
-                    k++;
-                    Metric[k] = Math.Sqrt(Math.Pow(Exam[0, i] - View4[0, j],2) + Math.Pow(Exam[1, i] - View4[1, j], 2));
-                    Views[k] = "Образ 4";
-                    k++;
-                }
+               {
+                    V1Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View1[0, j],2) + Math.Pow(Exam[1, i] - View1[1, j], 2));
+                    V2Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View2[0, j],2) + Math.Pow(Exam[1, i] - View2[1, j], 2));
+                    V3Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View3[0, j],2) + Math.Pow(Exam[1, i] - View3[1, j], 2));
+                    V4Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View4[0, j],2) + Math.Pow(Exam[1, i] - View4[1, j], 2));
+               }
+               Array.Sort(V1Metric);
+               Array.Sort(V2Metric);
+               Array.Sort(V3Metric);
+               Array.Sort(V4Metric);
+               for (int k = 0; i <= NeighborsCount; k++)
+               {
+                   
+               }
             }
+            
 
             /*for (k = 0; k < Metric.Length; k++)
             {

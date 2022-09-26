@@ -101,7 +101,7 @@ namespace KNN
             double[] V2Metric = new double[50];
             double[] V3Metric = new double[50];
             double[] V4Metric = new double[50];
-            
+            double[] ResultMetric = new double[200];
             for (int i = 0; i < 30; i++) //идём по всем МЭ
             { 
                 
@@ -111,22 +111,20 @@ namespace KNN
                     V2Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View2[0, j],2) + Math.Pow(Exam[1, i] - View2[1, j], 2));
                     V3Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View3[0, j],2) + Math.Pow(Exam[1, i] - View3[1, j], 2));
                     V4Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View4[0, j],2) + Math.Pow(Exam[1, i] - View4[1, j], 2));
+                    
                }
-               Array.Sort(V1Metric);
-               Array.Sort(V2Metric);
-               Array.Sort(V3Metric);
-               Array.Sort(V4Metric);
-               for (int k = 0; i <= NeighborsCount; k++)
-               {
-                   
-               }
+
+               ResultMetric = V1Metric.Concat(V2Metric).Concat(V3Metric).Concat(V4Metric).ToArray();
+               Array.Sort(ResultMetric);
+               for (int k = 0; k < NeighborsCount; k++)
+            {
+                
+            }
+               
             }
             
 
-            /*for (k = 0; k < Metric.Length; k++)
-            {
-                
-            }*/
+            
         }
     }
 }

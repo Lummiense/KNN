@@ -42,6 +42,9 @@ namespace KNN
         /// </summary>
         uint NeighborsCount;
 
+        public string ResultString;
+
+        
         Random rnd = new Random();
         private void button1_Click(object sender, EventArgs e)
         {
@@ -102,10 +105,11 @@ namespace KNN
             double[] V3Metric = new double[50];
             double[] V4Metric = new double[50];
             double[] ResultMetric = new double[200];
+            double[] VSum = new double[4];
             for (int i = 0; i < 30; i++) //идём по всем МЭ
-            { 
-                
-               for (int j=0;j<50;j++) //идём по всем образам
+            {
+                Array.Clear(VSum,0,4);
+                for (int j=0;j<50;j++) //идём по всем образам
                {
                     V1Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View1[0, j],2) + Math.Pow(Exam[1, i] - View1[1, j], 2));
                     V2Metric[j] = Math.Sqrt(Math.Pow(Exam[0, i] - View2[0, j],2) + Math.Pow(Exam[1, i] - View2[1, j], 2));
@@ -118,13 +122,51 @@ namespace KNN
                Array.Sort(ResultMetric);
                for (int k = 0; k < NeighborsCount; k++)
             {
-                
+                for (int m = 0; m < 20; m++)
+                {
+                    if (Array.Exists(V1Metric, element => element == ResultMetric[m]))
+                    {
+                        VSum[0] += ResultMetric[m];
+                    }
+                    else if (Array.Exists(V2Metric, element => element == ResultMetric[m]))
+                    {
+                        VSum[1] += ResultMetric[m];
+                    }
+                    else if (Array.Exists(V3Metric, element => element == ResultMetric[m]))
+                    {
+                        VSum[2] += ResultMetric[m];
+                    }
+                    else
+                    {
+                        VSum[3] += ResultMetric[m];
+                    }
+
+                }
             }
+
+
+               if (Array.IndexOf(VSum, VSum.Max()) == 0)
+               {
+                   ResultString += $"Точка {i+1} принадлежит образу 1\n";
+               }
+               else if(Array.IndexOf(VSum, VSum.Max()) == 1)
+               {
+                   ResultString += $"Точка {i+1} принадлежит образу 2\n";
+               }
+               else if (Array.IndexOf(VSum, VSum.Max()) == 2)
+               {
+                   ResultString += $"Точка {i+1} принадлежит образу 3\n";
+               }
+               else if (Array.IndexOf(VSum, VSum.Max()) == 3)
+               {
+                   ResultString += $"Точка {i+1} принадлежит образу 4\n";
+               }
                
             }
-            
 
-            
+            label18.Text = ResultString;
+
+
         }
     }
 }

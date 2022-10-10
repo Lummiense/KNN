@@ -106,6 +106,10 @@ namespace KNN
             double[] V4Metric = new double[50];
             double[] ResultMetric = new double[200];
             double[] VSum = new double[4];
+
+            ResultString = null;
+
+            
             for (int i = 0; i < 30; i++) //идём по всем МЭ
             {
                 Array.Clear(VSum,0,4);
@@ -165,6 +169,15 @@ namespace KNN
             }
 
             label18.Text = ResultString;
+
+            Graphics graphics = pictureBox1.CreateGraphics();
+            Point point1 = new Point();
+            Point point2 = new Point();
+            Point point3 = new Point();
+            Point point4 = new Point();
+            Point pointExam = new Point();
+
+            
 
 
         }

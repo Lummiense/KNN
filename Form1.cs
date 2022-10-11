@@ -171,15 +171,29 @@ namespace KNN
             label18.Text = ResultString;
 
             Graphics graphics = pictureBox1.CreateGraphics();
-            Point point1 = new Point();
-            Point point2 = new Point();
-            Point point3 = new Point();
-            Point point4 = new Point();
-            Point pointExam = new Point();
+            Point[] points1 = new Point[50];
+            Point[] points2 = new Point[50];
+            Point[] points3 = new Point[50];
+            Point[] points4 = new Point[50];
+            Point[] pointsExam = new Point[30];
 
-            
-
-
+            Pen pen1 = new Pen(Color.Gray, 3f);
+            Pen pen2 = new Pen(Color.Aqua, 3f);
+            Pen pen3 = new Pen(Color.Black, 3f);
+            Pen pen4 = new Pen(Color.Olive, 3f);
+            Pen penExam = new Pen(Color.Orange, 3f);
+            int y = 0;
+            for (int i = 0; i < 50; i++)
+            {
+                points1[i] = new Point((int)View1[0, y], (int)View1[1, y]);
+                points2[i] = new Point((int)View2[0, y], (int)View2[1, y]);
+                points3[i] = new Point((int)View3[0, y], (int)View3[1, y]);
+                points4[i] = new Point((int)View4[0, y], (int)View4[1, y]);
+            }
+            graphics.DrawLines(pen1, points1);
+            graphics.DrawLines(pen2, points2);
+            graphics.DrawLines(pen3, points3);
+            graphics.DrawLines(pen4, points4);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace KNN
 {
@@ -169,9 +170,44 @@ namespace KNN
             }
 
             label18.Text = ResultString;
+            Chart chart = new Chart();
+            chart.Parent = this;
+            chart.Dock = DockStyle.Fill;
+            chart.ChartAreas.Add(new ChartArea("Распознавание образов"));
+            
+            Series view1points = new Series("Образ 1");
+            view1points.ChartType = SeriesChartType.Line;
+            view1points.ChartArea = "Распознавание образов";
+            
+            Series view2points = new Series("Образ 2");
+            view2points.ChartType = SeriesChartType.Line;
+            view2points.ChartArea = "Распознавание образов";
 
-            Graphics graphics = pictureBox1.CreateGraphics();
-            Point[] points1 = new Point[50];
+            Series view3points = new Series("Образ 3");
+            view3points.ChartType = SeriesChartType.Line;
+            view3points.ChartArea = "Распознавание образов";
+
+            Series view4points = new Series("Образ 4");
+            view4points.ChartType = SeriesChartType.Line;
+            view4points.ChartArea = "Распознавание образов";
+
+            Series exampoints = new Series("МЭ");
+            exampoints.ChartType = SeriesChartType.Line;
+            exampoints.ChartArea = "Распознавание образов";
+            int y = 0;
+            for (int i = 0; i < 50; i++)
+            {
+                view1points.Points.AddXY((int)View1[0, y], (int)View1[1, y]);
+                view2points.Points.AddXY((int)View1[0, y], (int)View1[1, y]);
+                view3points.Points.AddXY((int)View2[0, y], (int)View2[1, y]);
+                view4points.Points.AddXY((int)View3[0, y], (int)View3[1, y]);                
+                y++;
+            }
+            chart.Series.Add(view1points);
+            chart.Series.Add(view2points);
+            chart.Series.Add(view3points);
+            chart.Series.Add(view4points);
+            /*Point[] points1 = new Point[50];
             Point[] points2 = new Point[50];
             Point[] points3 = new Point[50];
             Point[] points4 = new Point[50];
@@ -182,18 +218,19 @@ namespace KNN
             Pen pen3 = new Pen(Color.Black, 3f);
             Pen pen4 = new Pen(Color.Olive, 3f);
             Pen penExam = new Pen(Color.Orange, 3f);
-            int y = 0;
-            for (int i = 0; i < 50; i++)
-            {
-                points1[i] = new Point((int)View1[0, y], (int)View1[1, y]);
-                points2[i] = new Point((int)View2[0, y], (int)View2[1, y]);
-                points3[i] = new Point((int)View3[0, y], (int)View3[1, y]);
-                points4[i] = new Point((int)View4[0, y], (int)View4[1, y]);
-            }
-            graphics.DrawLines(pen1, points1);
+            ;*/
+
+            /*graphics.DrawLines(pen1, points1);
             graphics.DrawLines(pen2, points2);
             graphics.DrawLines(pen3, points3);
             graphics.DrawLines(pen4, points4);
+            graphics.DrawImage(penExam, pointsExam);*/
+
         }
+
+       /* private void button4_Click(object sender, EventArgs e)
+        {
+            
+        }*/
     }
 }

@@ -80,7 +80,11 @@ namespace KNN
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NeighborsCount = uint.Parse(textBox1.Text);
+           
+            while (!uint.TryParse(textBox1.Text,out  NeighborsCount))
+            {
+                textBox1.Text = "Вы вводите некорректные данные";
+            }
             textBox6.Text = "";
             for (int i = 0; i < 2; i++)
             {
@@ -170,67 +174,60 @@ namespace KNN
             }
 
             label18.Text = ResultString;
+            
             Chart chart = new Chart();
-            chart.Parent = this;
+            
+            chart.Parent = pictureBox1;
             chart.Dock = DockStyle.Fill;
             chart.ChartAreas.Add(new ChartArea("Распознавание образов"));
+
             
+
             Series view1points = new Series("Образ 1");
-            view1points.ChartType = SeriesChartType.Line;
+            view1points.ChartType = SeriesChartType.Point;
             view1points.ChartArea = "Распознавание образов";
             
             Series view2points = new Series("Образ 2");
-            view2points.ChartType = SeriesChartType.Line;
+            view2points.ChartType = SeriesChartType.Point;
             view2points.ChartArea = "Распознавание образов";
 
             Series view3points = new Series("Образ 3");
-            view3points.ChartType = SeriesChartType.Line;
+            view3points.ChartType = SeriesChartType.Point;
             view3points.ChartArea = "Распознавание образов";
 
             Series view4points = new Series("Образ 4");
-            view4points.ChartType = SeriesChartType.Line;
+            view4points.ChartType = SeriesChartType.Point;
             view4points.ChartArea = "Распознавание образов";
 
             Series exampoints = new Series("МЭ");
-            exampoints.ChartType = SeriesChartType.Line;
+            exampoints.ChartType = SeriesChartType.Point;
             exampoints.ChartArea = "Распознавание образов";
+            
             int y = 0;
             for (int i = 0; i < 50; i++)
             {
                 view1points.Points.AddXY((int)View1[0, y], (int)View1[1, y]);
-                view2points.Points.AddXY((int)View1[0, y], (int)View1[1, y]);
-                view3points.Points.AddXY((int)View2[0, y], (int)View2[1, y]);
-                view4points.Points.AddXY((int)View3[0, y], (int)View3[1, y]);                
+                view2points.Points.AddXY((int)View2[0, y], (int)View2[1, y]);
+                view3points.Points.AddXY((int)View3[0, y], (int)View3[1, y]);
+                view4points.Points.AddXY((int)View4[0, y], (int)View4[1, y]);
+                
+                y++;
+            }
+            y = 0;
+            for (int i=0;i<30;i++)
+            {
+                exampoints.Points.AddXY((int)Exam[0, y], (int)Exam[1, y]);
                 y++;
             }
             chart.Series.Add(view1points);
             chart.Series.Add(view2points);
             chart.Series.Add(view3points);
             chart.Series.Add(view4points);
-            /*Point[] points1 = new Point[50];
-            Point[] points2 = new Point[50];
-            Point[] points3 = new Point[50];
-            Point[] points4 = new Point[50];
-            Point[] pointsExam = new Point[30];
-
-            Pen pen1 = new Pen(Color.Gray, 3f);
-            Pen pen2 = new Pen(Color.Aqua, 3f);
-            Pen pen3 = new Pen(Color.Black, 3f);
-            Pen pen4 = new Pen(Color.Olive, 3f);
-            Pen penExam = new Pen(Color.Orange, 3f);
-            ;*/
-
-            /*graphics.DrawLines(pen1, points1);
-            graphics.DrawLines(pen2, points2);
-            graphics.DrawLines(pen3, points3);
-            graphics.DrawLines(pen4, points4);
-            graphics.DrawImage(penExam, pointsExam);*/
+            chart.Series.Add(exampoints);
+            
 
         }
-
-       /* private void button4_Click(object sender, EventArgs e)
-        {
-            
-        }*/
+        
+             
     }
 }

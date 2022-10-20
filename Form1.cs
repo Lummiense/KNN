@@ -42,10 +42,13 @@ namespace KNN
         /// К-соседей
         /// </summary>
         uint NeighborsCount;
+        int min;
+        int max;
 
         public string ResultString;
+        Chart chart = new Chart();
 
-        
+
         Random rnd = new Random();
         private void button1_Click(object sender, EventArgs e)
         {
@@ -53,27 +56,73 @@ namespace KNN
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
+            int[] minRnd = new int[4];
+            int[] maxRnd = new int[4];
+
             
-            
+
+            while (!int.TryParse(textBox7.Text, out minRnd[0]))
+            {
+                label14.Text = "Вы вводите некорректные данные минимального значения из диапазона образа 1";
+                return;
+            }
+            while (!int.TryParse(textBox8.Text, out maxRnd[0]))
+            {
+                label14.Text = "Вы вводите некорректные данные максимального значения из диапазона образа 1";
+                return;
+            }
+            while (!int.TryParse(textBox9.Text, out minRnd[1]))
+            {
+                label14.Text = "Вы вводите некорректные данные минимального значения из диапазона образа 2";
+                return;
+            }
+            while (!int.TryParse(textBox10.Text, out maxRnd[1]))
+            {
+                label14.Text = "Вы вводите некорректные данные максимального значения из диапазона образа 2";
+                return;
+            }
+            while (!int.TryParse(textBox11.Text, out minRnd[2]))
+            {
+                label14.Text = "Вы вводите некорректные данные минимального значения из диапазона образа 3";
+                return;
+            }
+            while (!int.TryParse(textBox12.Text, out maxRnd[2]))
+            {
+                label14.Text = "Вы вводите некорректные данные максимального значения из диапазона образа 3";
+                return;
+            }
+            while (!int.TryParse(textBox13.Text, out minRnd[3]))
+            {
+                label14.Text = "Вы вводите некорректные данные минимального значения из диапазона образа 4";
+                return;
+            }
+            while (!int.TryParse(textBox14.Text, out maxRnd[3]))
+            {
+                label14.Text = "Вы вводите некорректные данные максимального значения из диапазона образа 4";
+                return;
+            }
+
             
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 50; j++)
                 {
-                    View1[i, j] = rnd.Next(70, 95);
-                    View2[i, j] = rnd.Next(20, 45);
-                    View3[i, j] = rnd.Next(40, 65);
-                    View4[i, j] = rnd.Next(60, 85);                    
+                    View1[i, j] = rnd.Next(minRnd[0], maxRnd[0]);
+                    View2[i, j] = rnd.Next(minRnd[1], maxRnd[1]);
+                    View3[i, j] = rnd.Next(minRnd[2], maxRnd[2]);
+                    View4[i, j] = rnd.Next(minRnd[3], maxRnd[3]);                    
                 }
             }
+            min = minRnd.Min();
+            max = maxRnd.Max();
             for (int i=0;i<2;i++)
             {
                 for (int j=0;j<50;j++)
                 {
-                    textBox2.Text+= $"{View1[0, j]}       {View1[1, j]}\n";
-                    textBox3.Text += $"{View2[0, j]}       {View2[1, j]} \n";
-                    textBox4.Text += $"{View3[0, j]}       {View3[1, j]} \n";
-                    textBox5.Text += $"{View4[0, j]}       {View4[1, j]} \n";                   
+                    textBox2.Text += $"{View1[0, j]}       {View1[1, j]}\n";
+                    textBox3.Text += $"{View2[0, j]}       {View2[1, j]}\n";
+                    textBox4.Text += $"{View3[0, j]}       {View3[1, j]}\n";
+                    textBox5.Text += $"{View4[0, j]}       {View4[1, j]}\n";                   
                 }
             }
         }
@@ -84,13 +133,14 @@ namespace KNN
             while (!uint.TryParse(textBox1.Text,out  NeighborsCount))
             {
                 textBox1.Text = "Вы вводите некорректные данные";
+                return;
             }
             textBox6.Text = "";
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 30; j++)
                 {
-                    Exam[i, j] = rnd.Next(20, 75);                    
+                    Exam[i, j] = rnd.Next(min, max);                    
                 }
             }
             for (int i = 0; i < 2; i++)
@@ -105,13 +155,15 @@ namespace KNN
 
         private void button2_Click(object sender, EventArgs e)
         {
+            chart.ChartAreas.Clear();
+            chart.Series.Clear();
             double[] V1Metric = new double[50];
             double[] V2Metric = new double[50];
             double[] V3Metric = new double[50];
             double[] V4Metric = new double[50];
             double[] ResultMetric = new double[200];
             double[] VSum = new double[4];
-
+            
             ResultString = null;
 
             
@@ -175,9 +227,8 @@ namespace KNN
 
             label18.Text = ResultString;
             
-            Chart chart = new Chart();
             
-            chart.Parent = pictureBox1;
+            chart.Parent = pictureBox1;            
             chart.Dock = DockStyle.Fill;
             chart.ChartAreas.Add(new ChartArea("Распознавание образов"));
 

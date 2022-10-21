@@ -300,6 +300,7 @@
             // 
             // textBox5
             // 
+            this.textBox5.AcceptsTab = true;
             this.textBox5.Location = new System.Drawing.Point(261, 79);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";

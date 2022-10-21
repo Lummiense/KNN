@@ -42,7 +42,13 @@ namespace KNN
         /// К-соседей
         /// </summary>
         uint NeighborsCount;
+        /// <summary>
+        /// Нижняя граница генерации чисел
+        /// </summary>
         int min;
+        /// <summary>
+        /// Верхняя граница генерации чисел
+        /// </summary>
         int max;
 
         public string ResultString;
@@ -59,8 +65,8 @@ namespace KNN
             int[] minRnd = new int[4];
             int[] maxRnd = new int[4];
 
-            
 
+            #region Ввод границ генерации чисел
             while (!int.TryParse(textBox7.Text, out minRnd[0]))
             {
                 label14.Text = "Вы вводите некорректные данные минимального значения из диапазона образа 1";
@@ -101,8 +107,9 @@ namespace KNN
                 label14.Text = "Вы вводите некорректные данные максимального значения из диапазона образа 4";
                 return;
             }
+            #endregion
 
-            
+            //Заполняем образы координатами.
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 50; j++)
@@ -115,14 +122,16 @@ namespace KNN
             }
             min = minRnd.Min();
             max = maxRnd.Max();
+            
+            //Выводим координаты на экран
             for (int i=0;i<2;i++)
             {
                 for (int j=0;j<50;j++)
                 {
-                    textBox2.Text += $"{View1[0, j]}       {View1[1, j]}\n";
-                    textBox3.Text += $"{View2[0, j]}       {View2[1, j]}\n";
-                    textBox4.Text += $"{View3[0, j]}       {View3[1, j]}\n";
-                    textBox5.Text += $"{View4[0, j]}       {View4[1, j]}\n";                   
+                    textBox2.Text += $"{View1[0, j]}       {View1[1, j]}\r\n";
+                    textBox3.Text += $"{View2[0, j]}       {View2[1, j]}\r\n";
+                    textBox4.Text += $"{View3[0, j]}       {View3[1, j]}\r\n";
+                    textBox5.Text += $"{View4[0, j]}       {View4[1, j]}\r\n";                   
                 }
             }
         }
@@ -130,12 +139,15 @@ namespace KNN
         private void button3_Click(object sender, EventArgs e)
         {
            
+            //Ввод K-соседних точек
             while (!uint.TryParse(textBox1.Text,out  NeighborsCount))
             {
                 textBox1.Text = "Вы вводите некорректные данные";
                 return;
             }
             textBox6.Text = "";
+            
+            //Генерация МЭ
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 30; j++)
@@ -143,11 +155,13 @@ namespace KNN
                     Exam[i, j] = rnd.Next(min, max);                    
                 }
             }
+            
+            //Вывод МЭ на экран
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 30; j++)
                 {
-                    textBox6.Text += $"{Exam[0, j]}       {Exam[1, j]}\n";                   
+                    textBox6.Text += $"{Exam[0, j]}       {Exam[1, j]}\r\n";                   
                 }
             }
 
@@ -166,7 +180,7 @@ namespace KNN
             
             ResultString = null;
 
-            
+            #region Вычисление метрик
             for (int i = 0; i < 30; i++) //идём по всем МЭ
             {
                 Array.Clear(VSum,0,4);
@@ -181,7 +195,10 @@ namespace KNN
 
                ResultMetric = V1Metric.Concat(V2Metric).Concat(V3Metric).Concat(V4Metric).ToArray();
                Array.Sort(ResultMetric);
-               for (int k = 0; k < NeighborsCount; k++)
+                #endregion
+
+                //Вычисляем принадлежность метрики к образу
+                for (int k = 0; k < NeighborsCount; k++)
             {
                 for (int m = 0; m < 20; m++)
                 {
@@ -205,7 +222,7 @@ namespace KNN
                 }
             }
 
-
+                //Вычисляем принадлежность точки к образу
                if (Array.IndexOf(VSum, VSum.Max()) == 0)
                {
                    ResultString += $"Точка {i+1} принадлежит образу 1\n";
@@ -226,8 +243,8 @@ namespace KNN
             }
 
             label18.Text = ResultString;
-            
-            
+
+            #region Строим график
             chart.Parent = pictureBox1;            
             chart.Dock = DockStyle.Fill;
             chart.ChartAreas.Add(new ChartArea("Распознавание образов"));
@@ -275,7 +292,7 @@ namespace KNN
             chart.Series.Add(view3points);
             chart.Series.Add(view4points);
             chart.Series.Add(exampoints);
-            
+            #endregion
 
         }
         
